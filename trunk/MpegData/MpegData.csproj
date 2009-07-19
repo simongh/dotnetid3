@@ -46,6 +46,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="v23\BaseFrame.cs" />
+    <Compile Include="v23\BaseTextFrame.cs" />
+    <Compile Include="v23\Constants.cs" />
+    <Compile Include="v23\Frames\AudioEncryption.cs" />
+    <Compile Include="v23\Frames\CdIdentifier.cs" />
+    <Compile Include="v23\Frames\Encryption.cs" />
+    <Compile Include="v23\Frames\EventTimingCodes.cs" />
+    <Compile Include="v23\Frames\Group.cs" />
+    <Compile Include="v23\Frames\Link.cs" />
+    <Compile Include="v23\Frames\PlayCounter.cs" />
+    <Compile Include="v23\Frames\Popularimeter.cs" />
+    <Compile Include="v23\Frames\PositionSync.cs" />
+    <Compile Include="v23\Frames\PrivateData.cs" />
+    <Compile Include="v23\Frames\RelativeVolumeAdjustment.cs" />
+    <Compile Include="v23\Frames\Reverb.cs" />
+    <Compile Include="v23\Frames\SyncedTempoCodes.cs" />
+    <Compile Include="v23\Frames\UniqueFileIdentifier.cs" />
+    <Compile Include="v23\Frames\UrlLink.cs" />
+    <Compile Include="v23\SingleValueTextFrame.cs" />
+    <Compile Include="v23\TempoCode.cs" />
+    <Compile Include="v23\TimingCode.cs" />
+    <Compile Include="v23\VolumeAdjustment.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
