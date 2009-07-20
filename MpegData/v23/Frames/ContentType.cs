@@ -12,6 +12,8 @@ namespace MpegData.v23.Frames
     {
         private string _Genre;
         private int _Legacy;
+        private bool _Remix;
+        private bool _Cover;
 
         /// <summary>
         /// Gets or sets the genre as text. Setting this will clear any legacy genre.
@@ -44,20 +46,23 @@ namespace MpegData.v23.Frames
 
         public bool Remix
         {
-            get;
-            set;
+            get { return _Remix; }
+            set { _Remix = value; }
         }
 
         public bool Cover
         {
-            get;
-            set;
+            get { return _Cover; }
+            set { _Cover = value; }
         }
 
         public Genre(int genre)
         {
             _Legacy = genre;
             _Genre = null;
+
+            _Cover = false;
+            _Remix = false;
         }
 
         public Genre(string genre)
@@ -73,6 +78,9 @@ namespace MpegData.v23.Frames
                 _Legacy = -1;
                 _Genre = genre;
             }
+
+            _Cover = false;
+            _Remix = false;
 
             if (Regex.Match(genre, "\\(RX\\)").Success)
                 Remix = true;
