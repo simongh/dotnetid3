@@ -51,10 +51,15 @@
     <Compile Include="v23\Constants.cs" />
     <Compile Include="v23\Frames\AudioEncryption.cs" />
     <Compile Include="v23\Frames\CdIdentifier.cs" />
+    <Compile Include="v23\Frames\ContentType.cs" />
+    <Compile Include="v23\Frames\Copyright.cs" />
     <Compile Include="v23\Frames\Encryption.cs" />
     <Compile Include="v23\Frames\EventTimingCodes.cs" />
     <Compile Include="v23\Frames\Group.cs" />
     <Compile Include="v23\Frames\Link.cs" />
+    <Compile Include="v23\Frames\MultiValueFrames.cs" />
+    <Compile Include="v23\Frames\Set.cs" />
+    <Compile Include="v23\MultiValueTextFrame.cs" />
     <Compile Include="v23\Frames\PlayCounter.cs" />
     <Compile Include="v23\Frames\Popularimeter.cs" />
     <Compile Include="v23\Frames\PositionSync.cs" />
@@ -62,6 +67,7 @@
     <Compile Include="v23\Frames\RelativeVolumeAdjustment.cs" />
     <Compile Include="v23\Frames\Reverb.cs" />
     <Compile Include="v23\Frames\SyncedTempoCodes.cs" />
+    <Compile Include="v23\Frames\SingleValueFrames.cs" />
     <Compile Include="v23\Frames\UniqueFileIdentifier.cs" />
     <Compile Include="v23\Frames\UrlLink.cs" />
     <Compile Include="v23\SingleValueTextFrame.cs" />

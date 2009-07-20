@@ -13,7 +13,7 @@ namespace MpegData.v23
         /// <summary>
         /// Gets or sets the text for this frame
         /// </summary>
-        public string Value
+        public virtual string Value
         {
             get;
             set;
