@@ -79,6 +79,17 @@ namespace MpegData.v23
         Unicode = 1
     }
 
+    public enum TextContentType
+    {
+        Other = 0,
+        Lyrics = 1,
+        TextTranscription = 2,
+        Movement = 3,
+        Events = 4,
+        Chord = 5,
+        Trivia = 6
+    }
+
     public static class Constants
     {
     }
