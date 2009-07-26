@@ -8,7 +8,7 @@ namespace MpegData.v23
     /// <summary>
     /// Volume properties for a speaker
     /// </summary>
-    public class VolumeAdjustment
+    public struct VolumeAdjustment
     {
         private long _RelativeChange;
         private long _Peak;

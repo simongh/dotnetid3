@@ -5,57 +5,39 @@ using System.Text;
 namespace MpegData.v23.Frames
 {
     /// <summary>
-    /// Holds lyrics/text synced to the audio
+    /// A list of equalisations
     /// </summary>
-    public class SyncedLyrics : LanguageFrame, IList<SyncText>
+    public class Equalisation : BaseFrame, IList<EqualisationSettting>
     {
-        private List<SyncText> _InnerList;
+        private int _AdjustmentSize;
+        private List<EqualisationSettting> _InnerList;
 
         public override string Name
         {
-            get { return "SYLT"; }
-        }
-
-        internal override string UniqueId
-        {
-            get { return Name + Language + Descriptor; }
+            get { return "EQUA"; }
         }
 
         /// <summary>
-        /// Gets or sets the format of the timestamps
+        /// Gets or sets the size of the equalisation adjustments
         /// </summary>
-        public TimeStampFormat Format
+        public int AdjustmentSize
         {
-            get;
-            set;
+            get { return _AdjustmentSize; }
+            set
+            {
+                if (value < 1 || value > 63)
+                    throw new ArgumentOutOfRangeException("The adjustment size must be in the range 1-63");
+            }
         }
 
-        /// <summary>
-        /// Gets or sets the type of the text
-        /// </summary>
-        public TextContentType ContentType
-        {
-            get;
-            set;
-        }
+        #region IList<Frequency> Members
 
-        /// <summary>
-        /// Gets or sets the description of this text
-        /// </summary>
-        public string Descriptor
-        {
-            get;
-            set;
-        }
-
-        #region IList<SyncText> Members
-
-        public int IndexOf(SyncText item)
+        public int IndexOf(EqualisationSettting item)
         {
             return _InnerList.IndexOf(item);
         }
 
-        public void Insert(int index, SyncText item)
+        public void Insert(int index, EqualisationSettting item)
         {
             _InnerList.Insert(index, item);
         }
@@ -65,7 +47,7 @@ namespace MpegData.v23.Frames
             _InnerList.RemoveAt(index);
         }
 
-        public SyncText this[int index]
+        public EqualisationSettting this[int index]
         {
             get { return _InnerList[index]; }
             set { _InnerList[index] = value; }
@@ -73,9 +55,9 @@ namespace MpegData.v23.Frames
 
         #endregion
 
-        #region ICollection<SyncText> Members
+        #region ICollection<Frequency> Members
 
-        public void Add(SyncText item)
+        public void Add(EqualisationSettting item)
         {
             _InnerList.Add(item);
         }
@@ -85,12 +67,12 @@ namespace MpegData.v23.Frames
             _InnerList.Clear();
         }
 
-        public bool Contains(SyncText item)
+        public bool Contains(EqualisationSettting item)
         {
             return _InnerList.Contains(item);
         }
 
-        public void CopyTo(SyncText[] array, int arrayIndex)
+        public void CopyTo(EqualisationSettting[] array, int arrayIndex)
         {
             _InnerList.CopyTo(array, arrayIndex);
         }
@@ -100,16 +82,16 @@ namespace MpegData.v23.Frames
             get { return _InnerList.Count; }
         }
 
-        public bool Remove(SyncText item)
+        public bool Remove(EqualisationSettting item)
         {
             return _InnerList.Remove(item);
         }
 
         #endregion
 
-        #region IEnumerable<SyncText> Members
+        #region IEnumerable<Frequency> Members
 
-        public IEnumerator<SyncText> GetEnumerator()
+        public IEnumerator<EqualisationSettting> GetEnumerator()
         {
             return _InnerList.GetEnumerator();
         }
