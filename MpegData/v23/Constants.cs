@@ -90,6 +90,31 @@ namespace MpegData.v23
         Trivia = 6
     }
 
+    public enum PictureType
+    {
+        Other,
+        FileIcon,
+        OtherFileIcon,
+        FrontCover,
+        BackCover,
+        LeafletPage,
+        Media,
+        LeadArtist,
+        Artist,
+        Conductor,
+        Band,
+        Composer,
+        Lyricist,
+        RecordingLocation,
+        DuringRecording,
+        DuringPerformance,
+        VideoCapture,
+        BrightColouredFish,
+        Illustration,
+        ArtistLogo,
+        PublisherLogo
+    }
+
     public static class Constants
     {
     }
