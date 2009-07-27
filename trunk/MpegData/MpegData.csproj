@@ -64,6 +64,7 @@
     <Compile Include="v23\Frames\EventTimingCodes.cs" />
     <Compile Include="v23\Frames\AttachedFile.cs" />
     <Compile Include="v23\Frames\Group.cs" />
+    <Compile Include="v23\Frames\InitialKey.cs" />
     <Compile Include="v23\Frames\InvolvedPeopleList.cs" />
     <Compile Include="v23\Frames\Link.cs" />
     <Compile Include="v23\Frames\MultiValueFrames.cs" />
