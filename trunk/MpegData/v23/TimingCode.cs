@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MpegData.v23.Frames
+namespace MpegData.v23
 {
     /// <summary>
     /// Represents an individual timing code
