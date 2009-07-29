@@ -140,7 +140,7 @@ namespace MpegData.v23.Frames
     /// <summary>
     /// The recording dates
     /// </summary>
-    public class RecordingDate : SingleValueTextFrame
+    public class RecordingDates : SingleValueTextFrame
     {
         public override string Name
         {
