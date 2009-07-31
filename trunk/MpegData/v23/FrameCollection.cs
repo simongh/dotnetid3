@@ -5,38 +5,48 @@ using System.IO;
 
 namespace MpegData.v23
 {
-    public class FrameCollection : List<BaseFrame>
+    /// <summary>
+    /// Frame collection for v2.3.0 frames
+    /// </summary>
+    public class FrameCollection : BaseFrameCollection
     {
-        private ASCIIEncoding _Encoding;
-
-        public Tag ParentTag
+        /// <summary>
+        /// Gets the tag this collection belongs to
+        /// </summary>
+        public new Tag ParentTag
         {
             get;
             private set;
         }
 
+        /// <summary>
+        /// Create a frame collection
+        /// </summary>
+        /// <param name="parent">The tag this collection belongs to</param>
         public FrameCollection(Tag parent)
-            : base()
-        {
-            ParentTag = parent;
-            _Encoding = new ASCIIEncoding();
-        }
+            : base(parent)
+        { }
 
-        internal void ParseData(BinaryReader reader)
+        internal override void ImportData(BinaryReader reader)
         {
             long endPos = reader.BaseStream.Position + ParentTag.Size;
-            if (ParentTag.ExtendedHeader != null)
+            if (((Tag)ParentTag).ExtendedHeader != null)
                 endPos -= ParentTag.ExtendedHeader.Padding;
 
             BaseFrame frame = null;
             while (reader.BaseStream.Position < endPos)
             {
-                frame = FrameCollection.GetFrameFromId(_Encoding.GetString(ParentTag.IsUnsynchronised ? Util.Unsync(reader, 4) : reader.ReadBytes(4));
-                long size = Util.ConvertToInt64(ParentTag.IsUnsynchronised?Util.Unsync(reader,4):reader.ReadBytes(4));
-
+                frame = FrameCollection.GetFrameFromId(Encoding.ASCII.GetString(ParentTag.IsUnsynchronised ? Util.Unsync(reader, 4) : reader.ReadBytes(4)));
+                frame.ImportData(reader, ParentTag.IsUnsynchronised);
+                this.Add(frame);
             }
         }
 
+        /// <summary>
+        /// Create a frame from a frame ID string
+        /// </summary>
+        /// <param name="frameId">4 character frame ID</param>
+        /// <returns>a valid frame</returns>
         public static BaseFrame GetFrameFromId(string frameId)
         {
             switch (frameId)

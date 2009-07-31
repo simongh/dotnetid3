@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseFrame.cs" />
+    <Compile Include="BaseFrameCollection.cs" />
     <Compile Include="BaseTag.cs" />
     <Compile Include="CircularBuffer.cs" />
     <Compile Include="ID3Exception.cs" />
