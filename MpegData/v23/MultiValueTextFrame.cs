@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MpegData.v23.Frames
+namespace MpegData.v23
 {
     /// <summary>
     /// Store multiple text strings

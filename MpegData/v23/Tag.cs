@@ -5,37 +5,56 @@ using System.IO;
 
 namespace MpegData.v23
 {
+    /// <summary>
+    /// A v2.3.0 tag
+    /// </summary>
     public class Tag : BaseTag
     {
+        /// <summary>
+        /// Gets or sets an indication that the tag needs has unsync bytes (0x00) in it
+        /// </summary>
         public bool IsUnsynchronised
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Gets or sets whether this tag should be considered experimental
+        /// </summary>
         public bool IsExperimental
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Gets or sets the extended header
+        /// </summary>
         public ExtendedHeader ExtendedHeader
         {
             get;
             set;
         }
 
-        internal long Size
+        /// <summary>
+        /// Create a new tag
+        /// </summary>
+        public Tag()
         {
-            get;
-            set;
+            Frames = new FrameCollection(this);
         }
 
-        internal Tag(BinaryReader reader)
+        internal override void ImportData(BinaryReader reader)
         {
             ReadHeader(reader);
+            Frames.ImportData(reader);
         }
 
+        /// <summary>
+        /// Read the tag header from the stream
+        /// </summary>
+        /// <param name="reader">The stream contianing the data for this tag</param>
         private void ReadHeader(BinaryReader reader)
         {
             if (reader.BaseStream.Position + 5 >= reader.BaseStream.Length)
