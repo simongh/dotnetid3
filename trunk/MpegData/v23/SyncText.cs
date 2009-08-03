@@ -10,7 +10,6 @@ namespace MpegData.v23
     /// </summary>
     public struct SyncText : IComparable<SyncText>
     {
-        private string _Text;
         private long _TimeStamp;
 
         /// <summary>

@@ -12,7 +12,6 @@ namespace MpegData.v1
         private string _Album;
         private Int16 _Year;
         private string _Comment;
-        private byte _Track;
 
         private readonly Encoding _Encoder;
 
@@ -66,7 +65,7 @@ namespace MpegData.v1
             get { return _Year; }
             set
             {
-                if (value != null && value < 0 && value > 9999)
+                if (value < 0 && value > 9999)
                     throw new ArgumentOutOfRangeException("The year must be in the range 0 to 9999");
                 _Year = value;
             }

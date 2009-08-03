@@ -14,6 +14,10 @@ namespace MpegData.v23.Frames
         {
             get { return "TALB"; }
         }
+
+		internal Album(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 
     /// <summary>
@@ -25,6 +29,10 @@ namespace MpegData.v23.Frames
         {
             get { return "TENC"; }
         }
+
+		internal EncodedBy(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 
     /// <summary>
@@ -36,6 +44,10 @@ namespace MpegData.v23.Frames
         {
             get { return "TIT1"; }
         }
+
+		internal ContentGroup(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 
     /// <summary>
@@ -47,6 +59,10 @@ namespace MpegData.v23.Frames
         {
             get { return "TIT2"; }
         }
+
+		internal Title(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 
     /// <summary>
@@ -58,6 +74,10 @@ namespace MpegData.v23.Frames
         {
             get { return "TIT3"; }
         }
+
+		internal SubTitle(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 
     /// <summary>
@@ -69,6 +89,10 @@ namespace MpegData.v23.Frames
         {
             get { return "TOAL"; }
         }
+
+		internal OriginalTitle(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 
     /// <summary>
@@ -80,6 +104,10 @@ namespace MpegData.v23.Frames
         {
             get { return "TOFN"; }
         }
+
+		internal OriginalFilename(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 
     /// <summary>
@@ -91,6 +119,10 @@ namespace MpegData.v23.Frames
         {
             get { return "TOWN"; }
         }
+
+		internal FileOwner(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 
     /// <summary>
@@ -102,6 +134,10 @@ namespace MpegData.v23.Frames
         {
             get { return "TPE2"; }
         }
+
+		internal Band(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 
     /// <summary>
@@ -113,6 +149,10 @@ namespace MpegData.v23.Frames
         {
             get { return "TPE3"; }
         }
+
+		internal Conductor(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 
     /// <summary>
@@ -124,6 +164,10 @@ namespace MpegData.v23.Frames
         {
             get { return "TPE4"; }
         }
+
+		internal RemixedBy(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 
     /// <summary>
@@ -135,6 +179,10 @@ namespace MpegData.v23.Frames
         {
             get { return "TPUB"; }
         }
+
+		internal Publisher(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 
     /// <summary>
@@ -146,6 +194,10 @@ namespace MpegData.v23.Frames
         {
             get { return "TRDA"; }
         }
+
+		internal RecordingDates(FrameCollection frames)
+			: base(frames)
+		{ }
     }
     
     /// <summary>
@@ -157,6 +209,10 @@ namespace MpegData.v23.Frames
         {
             get { return "TRSN"; }
         }
+
+		internal InternetRadioStationName(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 
     /// <summary>
@@ -168,6 +224,10 @@ namespace MpegData.v23.Frames
         {
             get { return "TRSO"; }
         }
+
+		internal InternetRadioStationOwner(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 
     /// <summary>
@@ -190,6 +250,10 @@ namespace MpegData.v23.Frames
                 base.Value = value;
             }
         }
+
+		internal ISRC(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 
     /// <summary>
@@ -201,5 +265,9 @@ namespace MpegData.v23.Frames
         {
             get { return "TSSE"; }
         }
+
+		internal EncoderSettings(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 }

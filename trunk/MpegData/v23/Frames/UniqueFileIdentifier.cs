@@ -45,5 +45,9 @@ namespace MpegData.v23.Frames
                 _Identifer = value;
             }
         }
+
+		internal UniqueFileIdentifier(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 }

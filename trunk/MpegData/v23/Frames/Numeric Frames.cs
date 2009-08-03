@@ -14,6 +14,10 @@ namespace MpegData.v23.Frames
         {
             get { return "TDLY"; }
         }
+
+		internal PlaylistDelay(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 
     /// <summary>
@@ -25,6 +29,10 @@ namespace MpegData.v23.Frames
         {
             get { return "TLEN"; }
         }
+
+		internal FileLength(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 
     /// <summary>
@@ -36,6 +44,10 @@ namespace MpegData.v23.Frames
         {
             get { return "TBPM"; }
         }
+
+		internal Bpm(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 
     /// <summary>
@@ -47,6 +59,10 @@ namespace MpegData.v23.Frames
         {
             get { return "TSIZ"; }
         }
+
+		internal FileSize(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 
     /// <summary>
@@ -70,6 +86,10 @@ namespace MpegData.v23.Frames
                 base.Value = value;
             }
         }
+
+		internal ReleaseYear(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 
     /// <summary>
@@ -81,6 +101,10 @@ namespace MpegData.v23.Frames
         {
             get { return "TORY"; }
         }
+
+		internal OriginalReleaseYear(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 
     /// <summary>
@@ -101,6 +125,10 @@ namespace MpegData.v23.Frames
             get;
             set;
         }
+
+		internal Track(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 
 }

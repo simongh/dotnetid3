@@ -71,10 +71,10 @@ namespace MpegData.v23.Frames
             set;
         }
 
-        public UrlLink(UrlLinkType linkType)
-            : base()
-        {
-            LinkType = linkType;
-        }
+		public UrlLink(FrameCollection frames, UrlLinkType linkType)
+			: base(frames)
+		{
+			LinkType = linkType;
+		}
     }
 }

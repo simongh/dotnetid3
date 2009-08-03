@@ -22,6 +22,10 @@ namespace MpegData.v23.Frames
             set;
         }
 
+		internal SyncedTempoCodes(FrameCollection frames)
+			: base(frames)
+		{ }
+
         #region IList<TempoCode> Members
 
         public int IndexOf(TempoCode item)

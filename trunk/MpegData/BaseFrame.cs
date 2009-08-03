@@ -8,14 +8,30 @@ namespace MpegData
     /// <summary>
     /// Base ID3 frame
     /// </summary>
-    public abstract class BaseFrame
-    {
-        /// <summary>
-        /// Gets the frame name string
-        /// </summary>
-        public abstract string Name
-        {
-            get;
-        }
-    }
+	public abstract class BaseFrame
+	{
+		/// <summary>
+		/// Gets the frame name string
+		/// </summary>
+		public abstract string Name
+		{
+			get;
+		}
+
+		internal long Size
+		{
+			get;
+			set;
+		}
+
+		public BaseFrameCollection Frames
+		{
+			get;
+			internal set;
+		}
+
+		public BaseFrame()
+		{ }
+
+	}
 }

@@ -18,5 +18,9 @@ namespace MpegData.v23
             get;
             set;
         }
+
+		internal LanguageFrame(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 }

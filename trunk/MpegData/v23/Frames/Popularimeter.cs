@@ -49,5 +49,9 @@ namespace MpegData.v23.Frames
             get;
             set;
         }
+
+		internal Popularimeter(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 }

@@ -23,5 +23,9 @@ namespace MpegData.v23.Frames
             get;
             set;
         }
+
+		internal PlayCounter(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 }

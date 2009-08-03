@@ -11,5 +11,9 @@ namespace MpegData.v23.Frames
         {
             get { return "USLT"; }
         }
+
+		internal UnsyncedLyrics(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 }

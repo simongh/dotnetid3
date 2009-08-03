@@ -25,6 +25,10 @@ namespace MpegData.v23.Frames
             set;
         }
 
+		internal EventTimingCodes(FrameCollection frames)
+			: base(frames)
+		{ }
+
         #region IList<TimingCode> Members
 
         public int IndexOf(TimingCode item)
@@ -101,5 +105,15 @@ namespace MpegData.v23.Frames
         }
 
         #endregion
-    }
+
+		internal override void ParseBody(byte[] data)
+		{
+			throw new NotImplementedException();
+		}
+
+		protected override byte[] BodyToArray()
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

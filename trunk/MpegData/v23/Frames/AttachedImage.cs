@@ -61,5 +61,19 @@ namespace MpegData.v23.Frames
             get;
             set;
         }
-    }
+
+		internal AttachedImage(FrameCollection frames)
+			: base(frames)
+		{ }
+
+		internal override void ParseBody(byte[] data)
+		{
+			throw new NotImplementedException();
+		}
+
+		protected override byte[] BodyToArray()
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

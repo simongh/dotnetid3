@@ -40,5 +40,9 @@ namespace MpegData.v23.Frames
                 _Position = value;
             }
         }
+
+		internal PositionSync(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 }

@@ -104,5 +104,9 @@ namespace MpegData.v23.Frames
             get;
             set;
         }
+
+		internal Reverb(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 }

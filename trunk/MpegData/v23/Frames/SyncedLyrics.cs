@@ -48,6 +48,10 @@ namespace MpegData.v23.Frames
             set;
         }
 
+		internal SyncedLyrics(FrameCollection frames)
+			: base(frames)
+		{ }
+
         #region IList<SyncText> Members
 
         public int IndexOf(SyncText item)
