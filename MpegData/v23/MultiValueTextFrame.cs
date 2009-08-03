@@ -38,5 +38,9 @@ namespace MpegData.v23
                 }
             }
         }
+
+		internal MultiValueTextFrame(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 }

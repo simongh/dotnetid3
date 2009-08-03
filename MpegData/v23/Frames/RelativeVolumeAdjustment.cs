@@ -77,5 +77,9 @@ namespace MpegData.v23.Frames
             get;
             set;
         }
+
+		internal RelativeVolumeAdjustment(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 }

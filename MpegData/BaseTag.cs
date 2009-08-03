@@ -35,6 +35,8 @@ namespace MpegData
         /// <param name="reader">The stream contianing the data for this tag</param>
         internal abstract void ImportData(BinaryReader reader);
 
+		internal abstract void ExportData(BinaryWriter writer);
+
     }
 
 }

@@ -58,5 +58,9 @@ namespace MpegData.v23.Frames
             set;
         }
 
+		internal Encryption(FrameCollection frames)
+			: base(frames)
+		{ }
+
     }
 }

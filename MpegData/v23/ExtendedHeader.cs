@@ -10,7 +10,11 @@ namespace MpegData.v23
     /// </summary>
     public class ExtendedHeader
     {
-        /// <summary>
+		public event EventHandler<CRCEventArgs> CalculateCRC;
+
+		private byte[] _CRC;
+
+		/// <summary>
         /// Gets or sets the amount of padding to add to the end of the tag
         /// </summary>
         public long Padding
@@ -22,7 +26,7 @@ namespace MpegData.v23
         /// <summary>
         /// Gets or sets the CRC value of the unsynced frame
         /// </summary>
-        public byte[] CRC
+        public bool HasCRC
         {
             get;
             set;
@@ -35,13 +39,13 @@ namespace MpegData.v23
         internal ExtendedHeader(byte[] value)
             : this()
         {
-            bool HasCRC = (value[0] & 0x80) == 0x80;
+            HasCRC = (value[0] & 0x80) == 0x80;
             if (HasCRC && value.Length == 6)
                 throw new ID3Exception("A CRC should be included but was not present.");
 
             Padding = Util.ConvertToInt64(value, 2);
-            CRC = new byte[4];
-            Array.Copy(value, 6, CRC, 0, 4);
+            _CRC = new byte[4];
+            Array.Copy(value, 6, _CRC, 0, 4);
         }
 
         /// <summary>
@@ -50,6 +54,41 @@ namespace MpegData.v23
         public ExtendedHeader()
         {
         }
+
+		internal byte[] ToArray()
+		{
+			byte[] result = null;
+			if (HasCRC)
+			{
+				result = new byte[10];
+				result[3] = 6;
+			}
+			else
+			{
+				result = new byte[14];
+				result[3] = 10;
+			}
+
+			result[4] = HasCRC ? (byte)0x80 : (byte)0;
+			Util.ConvertFromInt64(Padding).CopyTo(result, 6);
+
+			if (_CRC != null)
+				_CRC.CopyTo(result, 9);
+
+			return result;
+		}
+
+		internal virtual void OnCalculateCRC(byte[] data)
+		{
+			CRCEventArgs e = new CRCEventArgs(data);
+			if (CalculateCRC != null)
+				CalculateCRC(this, e);
+
+			if (e.CRC != null && e.CRC.Length != 4)
+				throw new ID3Exception("The Tag CRC should be 4 bytes long.");
+
+			_CRC = e.CRC;
+		}
 
     }
 }

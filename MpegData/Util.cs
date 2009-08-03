@@ -93,5 +93,36 @@ namespace MpegData
 
             return result;
         }
+
+		public static byte[] AddUnsync(Stream stream)
+		{
+			MemoryStream output = new MemoryStream();
+
+			byte tmp;
+			stream.Seek(0, SeekOrigin.Begin);
+			while (stream.Position <= stream.Length)
+			{
+				tmp = (byte)stream.ReadByte();
+				output.WriteByte(tmp);
+				if (tmp == 0xff)
+					output.WriteByte(0);
+			}
+
+			return output.ToArray();
+		}
+
+		public static byte[] AddUnsync(byte[] data)
+		{
+			MemoryStream output = new MemoryStream();
+
+			for (int i = 0; i < data.Length; i++)
+			{
+				output.WriteByte(data[i]);
+				if (data[i] == 0xff)
+					output.WriteByte(0);
+			}
+
+			return output.ToArray();
+		}
     }
 }

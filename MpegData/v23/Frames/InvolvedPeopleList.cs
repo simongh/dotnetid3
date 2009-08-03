@@ -16,6 +16,10 @@ namespace MpegData.v23.Frames
             get { return "IPLS"; }
         }
 
+		internal InvolvedPeopleList(FrameCollection frames)
+			: base(frames)
+		{ }
+
         #region IList<InvolvedPerson> Members
 
         public int IndexOf(InvolvedPerson item)
@@ -92,5 +96,15 @@ namespace MpegData.v23.Frames
         }
 
         #endregion
-    }
+
+		internal override void ParseBody(byte[] data)
+		{
+			throw new NotImplementedException();
+		}
+
+		protected override byte[] BodyToArray()
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

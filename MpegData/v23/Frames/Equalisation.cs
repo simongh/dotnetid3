@@ -27,8 +27,14 @@ namespace MpegData.v23.Frames
             {
                 if (value < 1 || value > 63)
                     throw new ArgumentOutOfRangeException("The adjustment size must be in the range 1-63");
+
+				_AdjustmentSize = value;
             }
         }
+
+		internal Equalisation(FrameCollection frames)
+			: base(frames)
+		{ }
 
         #region IList<Frequency> Members
 
@@ -106,5 +112,15 @@ namespace MpegData.v23.Frames
         }
 
         #endregion
-    }
+
+		internal override void ParseBody(byte[] data)
+		{
+			throw new NotImplementedException();
+		}
+
+		protected override byte[] BodyToArray()
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

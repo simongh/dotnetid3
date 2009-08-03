@@ -10,7 +10,10 @@ namespace MpegData.v23
     /// </summary>
     public abstract class BaseFrame : MpegData.BaseFrame
     {
-        /// <summary>
+		public event EventHandler<CompressFrameEventArgs> CompressFrame;
+		public event EventHandler<EncryptFrameEventArgs> EncryptFrame;
+		
+		/// <summary>
         /// Ascii Encoder for reading frame fields
         /// </summary>
         protected Encoding BaseEncoder;
@@ -96,15 +99,6 @@ namespace MpegData.v23
         }
 
         /// <summary>
-        /// Gets the raw data for this frame if it could not be parsed
-        /// </summary>
-        public byte[] RawData
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
         /// Gets or sets the size of the decompressed data
         /// </summary>
         internal long DecompressedSize
@@ -113,13 +107,16 @@ namespace MpegData.v23
             set;
         }
 
-        public BaseFrame()
-        {
-            PreserveOnFileChange = true;
-            PreserveOnTagChange = true;
+		public BaseFrame(FrameCollection frames)
+			: base()
+		{
+			Frames = frames;
 
-            BaseEncoder = Encoding.ASCII;
-        }
+			PreserveOnFileChange = true;
+			PreserveOnTagChange = true;
+
+			BaseEncoder = Encoding.ASCII;
+		}
 
         /// <summary>
         /// Parses the frame flags
@@ -143,85 +140,104 @@ namespace MpegData.v23
         }
 
         /// <summary>
-        /// Imports the binary data into the frame
-        /// </summary>
-        /// <param name="reader">Binary reader on the stream containing the data for the frame</param>
-        /// <param name="isUnsynced">Indicates the binary data has been unsynced</param>
-        internal virtual void ImportData(BinaryReader reader, bool isUnsynced)
-        {
-            long size = Util.ConvertToInt64(isUnsynced ? Util.Unsync(reader, 4) : reader.ReadBytes(4));
-
-            ReadFlags(isUnsynced ? Util.Unsync(reader, 2) : reader.ReadBytes(2));
-            if (IsCompressed)
-            {
-                DecompressedSize = Util.ConvertToInt64(isUnsynced ? Util.Unsync(reader, 4) : reader.ReadBytes(4));
-                size -= 4;
-            }
-            if (IsEncrypted)
-            {
-                EncryptionMethod = isUnsynced ? Util.Unsync(reader) : reader.ReadByte();
-                size--;
-            }
-            if (IsInGroup)
-            {
-                GroupId = isUnsynced ? Util.Unsync(reader) : reader.ReadByte();
-                size--;
-            }
-
-            if (IsCompressed || IsEncrypted)
-                StoreRawData(reader, size);
-            else
-                ReadBody(reader, size);
-        }
-
-        /// <summary>
         /// Parses the frame body
         /// </summary>
         /// <param name="reader">Binary reader on the stream containing the data for the frame</param>
         /// <param name="size">amount of data to read from the stream</param>
-        protected virtual void ReadBody(BinaryReader reader, long size)
+        internal virtual void ParseBody(byte[] data)
         {
         }
 
-        /// <summary>
-        /// Load the frame data when body data could not be parsed at load time.
-        /// </summary>
-        /// <param name="data">data to load into the frame</param>
-        public void ParseRawData(byte[] data)
+        internal virtual void ToBinary(BinaryWriter writer)
         {
-            if (RawData == null)
-                return;
+			byte[] buffer = BodyToArray();
 
-            MemoryStream ms = new MemoryStream(data);
-            BinaryReader reader = new BinaryReader(ms);
+            writer.Write(BaseEncoder.GetBytes(this.Name));
+            
+            Size = 0;
+			if (IsCompressed)
+			{
+				buffer = OnCompressFrame(buffer);
+			}
+			if (IsEncrypted)
+			{
+				buffer = OnEncryptFrame(buffer);
+			}
+            if (IsInGroup)
+                Size++;
+            Size += buffer.Length;
 
-            ReadBody(reader, ms.Length);
+            writer.Write(Util.ConvertFromInt64(Size));
+            byte flags = PreserveOnTagChange ? (byte)0x80 : (byte)0x0;
+            flags += PreserveOnFileChange ? (byte)0x40 : (byte)0;
+            flags += IsReadOnly ? (byte)0x20 : (byte)0x0;
+            writer.Write(flags);
 
-            reader.Close();
-            ms.Close();
+			flags = IsCompressed ? (byte)0x80 : (byte)0;
+			flags += IsEncrypted ? (byte)0x40 : (byte)0;
+			flags += IsInGroup ? (byte)0x20 : (byte)0;
+			writer.Write(flags);
 
-            RawData = null;
+			if (IsCompressed)
+				writer.Write(Util.ConvertFromInt64(DecompressedSize));
+			if (IsEncrypted)
+				writer.Write(EncryptionMethod);
+			if (IsInGroup)
+				writer.Write(GroupId);
+
+			writer.Write(buffer);
         }
 
-        /// <summary>
-        /// Store the body data in the RawData field
-        /// </summary>
-        /// <param name="reader">Binary reader on the stream containing the data for the frame</param>
-        /// <param name="size">amount of data to read from the stream</param>
-        private void StoreRawData(BinaryReader reader, long size)
-        {
-            const int chunksize = 10;
+		protected virtual byte[] BodyToArray()
+		{
+			throw new NotImplementedException();
+		}
 
-            RawData = new byte[size];
+		protected byte[] OnCompressFrame(byte[] buffer)
+		{
+			if (CompressFrame == null && IsCompressed)
+				throw new ID3Exception("The frame is flagged as compressed, but nothing has been set to handle this.");
 
-            int i = 0;
-            while (i + chunksize < size)
-            {
-                reader.Read(RawData, i, chunksize);
-                i += chunksize;
-            }
+			Size += 4;
+			DecompressedSize = buffer.Length;
 
-            reader.Read(RawData, i, (int)(size - i));
-        }
-    }
+			CompressFrameEventArgs e = new CompressFrameEventArgs(buffer);
+
+			if (CompressFrame != null)
+				CompressFrame(this, e);
+
+			if (e.Clear)
+			{
+				IsCompressed = false;
+				Size -= 4;
+
+				return buffer;
+			}
+			else
+				return e.Data;
+		}
+
+		protected byte[] OnEncryptFrame(byte[] buffer)
+		{
+			if (EncryptFrame == null && IsEncrypted)
+				throw new ID3Exception("The frame is flagged as encrypted, but nothing has been set to handle this.");
+
+			Size++;
+			EncryptFrameEventArgs e = new EncryptFrameEventArgs(buffer, this.EncryptionMethod);
+
+			if (EncryptFrame != null)
+				EncryptFrame(this, e);
+
+			if (e.Clear)
+			{
+				IsEncrypted = false;
+				Size--;
+
+				return buffer;
+			}
+			else
+				return e.Data;
+		}
+
+	}
 }

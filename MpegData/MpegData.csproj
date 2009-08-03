@@ -57,7 +57,10 @@
     <Compile Include="v1\Tag.cs" />
     <Compile Include="v23\BaseFrame.cs" />
     <Compile Include="v23\BaseTextFrame.cs" />
+    <Compile Include="v23\CompressFrameEventArgs.cs" />
     <Compile Include="v23\Constants.cs" />
+    <Compile Include="v23\CRCEventArgs.cs" />
+    <Compile Include="v23\EncryptFrameEventArgs.cs" />
     <Compile Include="v23\EqualisationSetting.cs" />
     <Compile Include="v23\ExtendedHeader.cs" />
     <Compile Include="v23\FrameCollection.cs" />
@@ -81,9 +84,11 @@
     <Compile Include="v23\Frames\Set.cs" />
     <Compile Include="v23\Frames\SyncedLyrics.cs" />
     <Compile Include="v23\Frames\TermsOfUse.cs" />
+    <Compile Include="v23\Frames\Unknown.cs" />
     <Compile Include="v23\Frames\UnsyncedLyrics.cs" />
     <Compile Include="v23\Frames\UserText.cs" />
     <Compile Include="v23\Frames\UserUrlLink.cs" />
+    <Compile Include="v23\Genre.cs" />
     <Compile Include="v23\InvolvedPerson.cs" />
     <Compile Include="v23\LanguageFrame.cs" />
     <Compile Include="v23\MultiValueTextFrame.cs" />

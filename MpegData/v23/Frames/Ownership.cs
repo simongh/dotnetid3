@@ -50,5 +50,9 @@ namespace MpegData.v23.Frames
             get;
             set;
         }
+
+		internal Ownership(FrameCollection frames)
+			: base(frames)
+		{ }
     }
 }
