@@ -28,7 +28,7 @@ namespace MpegData.v23
             : base(parent)
         { }
 
-        internal override void ImportData(BinaryReader reader)
+        internal override void Parse(BinaryReader reader)
         {
             long endPos = reader.BaseStream.Position + ParentTag.Size;
             if (((Tag)ParentTag).ExtendedHeader != null)
@@ -67,6 +67,7 @@ namespace MpegData.v23
 					Copy(frame, newframe);
 
 					newframe.Data = buffer;
+					ParentTag.UnknownFrames.Add(newframe);
 				}
 				else
 					frame.ParseBody(buffer);

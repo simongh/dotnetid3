@@ -32,7 +32,7 @@ namespace MpegData
         /// Parse the tag data for frames and fill the collection
         /// </summary>
         /// <param name="reader">Binary reader on the stream containing the data for the frames</param>
-        internal abstract void ImportData(BinaryReader reader);
+        internal abstract void Parse(BinaryReader reader);
 
 		internal abstract void ToBinary(BinaryWriter writer);
 

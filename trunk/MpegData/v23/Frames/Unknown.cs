@@ -30,5 +30,21 @@ namespace MpegData.v23.Frames
 		{
 			_Name = name;
 		}
+
+		public BaseFrame DecompressFrame()
+		{
+			if (!this.IsCompressed)
+				throw new ID3Exception("This frame is not compressed.");
+
+			throw new NotImplementedException();
+		}
+
+		public BaseFrame DecryptFrame()
+		{
+			if (!this.IsEncrypted)
+				throw new ID3Exception("This frame is not encrypted.");
+
+			throw new NotImplementedException();
+		}
 	}
 }
