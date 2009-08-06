@@ -11,6 +11,11 @@ namespace MpegData.v23
     public class Tag : BaseTag
     {
 
+		public override TagVersion Version
+		{
+			get { return TagVersion.v23; }
+		}
+
         /// <summary>
         /// Gets or sets an indication that the tag needs has unsync bytes (0x00) in it
         /// </summary>
@@ -46,10 +51,10 @@ namespace MpegData.v23
             Frames = new FrameCollection(this);
         }
 
-        internal override void ImportData(BinaryReader reader)
+        internal override void Parse(BinaryReader reader)
         {
             ReadHeader(reader);
-            Frames.ImportData(reader);
+            Frames.Parse(reader);
         }
 
         /// <summary>
@@ -84,7 +89,7 @@ namespace MpegData.v23
             }
         }
 
-		internal override void ExportData(BinaryWriter writer)
+		internal override void ToArray(BinaryWriter writer)
 		{
 			writer.Write(Encoding.ASCII.GetBytes("ID3"));
 			writer.Write((byte)3);
@@ -101,7 +106,7 @@ namespace MpegData.v23
 			Frames.ToBinary(bw);
 			bw.Flush();
 
-			byte[] buffer = IsUnsynchronised ? Util.AddUnsync(ms) : ms.ToArray();
+			byte[] buffer = IsUnsynchronised ? Util.ReSync(ms) : ms.ToArray();
 			bw.Close();
 			ms.Close();
 
@@ -111,7 +116,7 @@ namespace MpegData.v23
 				if (ExtendedHeader.HasCRC)
 					ExtendedHeader.OnCalculateCRC(buffer);
 
-				xhead = IsUnsynchronised ? Util.AddUnsync(ExtendedHeader.ToArray()) : ExtendedHeader.ToArray();
+				xhead = IsUnsynchronised ? Util.ReSync(ExtendedHeader.ToArray()) : ExtendedHeader.ToArray();
 			}
 
 			Size = buffer.Length + (xhead != null ? xhead.Length : 0);
@@ -126,9 +131,9 @@ namespace MpegData.v23
 		{
 			byte[] result = new byte[4];
 
-			result[0] = (byte)((Size & 0xfe00000) / 0x200000L);
-			result[1] = (byte)((Size & 0x1fc000) / 0x4000L);
-			result[2] = (byte)((Size & 0x3f80) / 0x80L);
+			result[0] = (byte)((Size & 0xfe00000) >> 21);
+			result[1] = (byte)((Size & 0x1fc000) >> 14);
+			result[2] = (byte)((Size & 0x3f80) >> 7);
 			result[3] = (byte)(Size & 0x7f);
 
 			return result;

@@ -94,7 +94,7 @@ namespace MpegData
             return result;
         }
 
-		public static byte[] AddUnsync(Stream stream)
+		public static byte[] ReSync(Stream stream)
 		{
 			MemoryStream output = new MemoryStream();
 
@@ -111,7 +111,7 @@ namespace MpegData
 			return output.ToArray();
 		}
 
-		public static byte[] AddUnsync(byte[] data)
+		public static byte[] ReSync(byte[] data)
 		{
 			MemoryStream output = new MemoryStream();
 
